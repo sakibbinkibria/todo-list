@@ -1,28 +1,26 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="flex flex-col justify-start items-center h-screen box-border">
+    <div class="bg-cream rounded-lg p-5 w-full h-full flex flex-col items-center">
+      <AddItem title="To-Do"/>
+      <ListView/>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import AddItem from './components/AddItem.vue'
+import ListView from './components/ListView'
+import './main.css'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    AddItem,
+    ListView
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
