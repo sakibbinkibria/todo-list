@@ -2,6 +2,8 @@
 
 ## Project setup
 ```
+First clone the repo
+run:
 npm install
 ```
 
@@ -15,10 +17,7 @@ npm run serve
 npm run build
 ```
 
-### Lints and fixes files
+### Run tests
 ```
-npm run lint
+npm run test
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
