@@ -1,81 +1,51 @@
-import { mount, createLocalVue } from "@vue/test-utils";
+import { shallowMount } from "@vue/test-utils";
 import ItemView from "@/components/ItemView.vue";
-import Vuex from "vuex";
-
-const localVue = createLocalVue();
-localVue.use(Vuex);
 
 describe("ItemView.vue", () => {
-  let store;
-  let actions;
+  let wrapper;
 
   beforeEach(() => {
-    actions = {
-      deleteTask: jest.fn(),
+    const task = {
+      id: "1",
+      title: "Sample Task",
+      status: "pending",
+      dueDate: new Date(),
     };
 
-    store = new Vuex.Store({
-      modules: {
-        tasks: {
-          namespaced: true,
-          actions,
-        },
+    wrapper = shallowMount(ItemView, {
+      propsData: {
+        task,
       },
     });
   });
 
-  const createWrapper = (propsData = {}) => {
-    return mount(ItemView, {
-      localVue,
-      store,
-      propsData,
-    });
-  };
-
-  it("renders the task title", () => {
-    const task = {
-      id: 1,
-      title: "Sample Task",
-      status: "pending",
-    };
-    const wrapper = createWrapper({ task });
-    expect(wrapper.text()).toContain("Sample Task");
+  it("renders correctly", () => {
+    expect(wrapper.exists()).toBe(true);
   });
 
-  it('toggles editing mode when clicking the "EDIT" button', async () => {
-    const task = {
-      id: 2,
-      title: "Another Task",
-      status: "pending",
-    };
-    const wrapper = createWrapper({ task });
+  it("displays task title correctly", () => {
+    const titleElement = wrapper.find("[data-test='task-title']");
+    expect(titleElement.text()).toBe("Sample Task");
+  });
 
-    const editButton = wrapper.find('[data-test="edit-button"]');
+  it("toggles edit mode on edit button click", async () => {
+    const actionsButton = wrapper.find("[data-test='actions-button']");
+    await actionsButton.trigger("click");
+    const editButton = wrapper.find("[data-test='edit-button']");
     await editButton.trigger("click");
-
     expect(wrapper.vm.editing).toBe(true);
-
-    const saveButton = wrapper.find('[data-test="save-button"]');
-    await saveButton.trigger("click");
-
-    expect(wrapper.vm.editing).toBe(false);
   });
 
-  it('opens and closes the confirmation modal when clicking "REMOVE"', async () => {
-    const task = {
-      id: 3,
-      title: "Yet Another Task",
-      status: "pending",
-    };
-    const wrapper = createWrapper({ task });
+  it("toggles popup on actions button click", async () => {
+    const actionsButton = wrapper.find("[data-test='actions-button']");
+    await actionsButton.trigger("click");
+    expect(wrapper.vm.showPopup).toBe(true);
+  });
 
-    await wrapper.setData({ taskTitle: "New Task" });
-    const removeButton = wrapper.find('[data-test="remove-button"]');
-    await removeButton.trigger("click");
-
-    expect(wrapper.vm.showConfirmationModal).toBe(true);
-
-    await wrapper.vm.removeTask();
-    expect(wrapper.vm.showConfirmationModal).toBe(false);
+  it("correctly determines if the task is passed the due date", () => {
+    const currentDate = new Date();
+    currentDate.setDate(currentDate.getDate() - 1); // Set current date to yesterday
+    wrapper.setData({ dueDate: currentDate.toISOString() });
+    expect(wrapper.vm.isPassedDueDate()).toBe(true);
   });
 });

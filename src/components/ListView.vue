@@ -12,7 +12,7 @@
                 <ItemView :task="task" />
             </div>
         </div>
-        <div v-else class="font-semibold text-lg mt-2">No tasks to show</div>
+        <div v-else class="font-semibold text-lg mt-2" data-test="no-tasks-message">No tasks to show</div>
     </div>
 </template>
 

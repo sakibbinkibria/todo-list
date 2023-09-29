@@ -15,11 +15,11 @@
             </div>
         </div>
 
-        <p v-if="!editing" class="text-center">{{ task.title }}</p>
+        <p v-if="!editing" class="text-center" data-test="task-title">{{ task.title }}</p>
         <input v-else v-model="taskTitle" type="text" class="border-2 border-accent rounded 2 p-2" />
         <div class="flex relative">
             <button v-if="!editing && task.status === 'completed'" @click="openConfirmationModal" class="text-white font-semibold bg-accent p-2 ml-2 rounded 2"
-                data-test="actions-button">
+                data-test="remove-button">
                 Remove
             </button>
             <button v-else-if="!editing" @click="togglePopup" class="text-white font-semibold bg-accent p-2 ml-2 rounded 2"
@@ -33,19 +33,19 @@
             <!-- Popup menu -->
             <div v-if="showPopup" class="absolute right-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg z-50"
                 style="min-width: 160px;">
-                <button @click="toggleEdit"
+                <button @click="toggleEdit"  data-test="edit-button"
                     class="block w-full p-2 text-left hover:bg-accent hover:text-white border-b border-gray-300">
                     Edit
                 </button>
-                <button @click="openConfirmationModal"
+                <button @click="openConfirmationModal"  data-test="done-button"
                     class="block w-full p-2 text-left hover:bg-accent hover:text-white border-b border-gray-300">
                     Mark as done
                 </button>
-                <button @click="duplicateTask"
+                <button @click="duplicateTask"  data-test="duplicate-button"
                     class="block w-full p-2 text-left hover:bg-accent hover:text-white border-b border-gray-300">
                     Duplicate
                 </button>
-                <button @click="setDueDate" class="block w-full p-2 text-left hover:bg-accent hover:text-white">
+                <button @click="setDueDate" class="block w-full p-2 text-left hover:bg-accent hover:text-white"  data-test="due-button">
                     Set Due Date
                 </button>
             </div>

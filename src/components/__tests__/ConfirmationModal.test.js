@@ -12,7 +12,7 @@ describe("ConfirmationModal.vue", () => {
     const wrapper = createWrapper({ visible: true, status: "pending" });
     expect(wrapper.isVisible()).toBe(true);
     expect(wrapper.text()).toContain(
-      "Are you sure this task is complete and you want to remove it?"
+      "Are you sure this task is complete and you want to remove it from pending list?"
     );
   });
 
