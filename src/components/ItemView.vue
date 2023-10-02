@@ -1,5 +1,5 @@
 <template>
-    <div class="rounded-lg shadow-lg p-2 md:p-5 w-full md:w-2/3 mt-2 mb-2 flex justify-between items-center" :class="{ 'bg-white': !isPassedDueDate(), 'bg-red-200': isPassedDueDate() }">
+    <div class="rounded-lg shadow-lg p-2 md:p-5 w-full md:w-2/3 mt-2 mb-2 flex justify-between items-center" :class="{ 'bg-white': !isPassedDueDate(), 'bg-red-200': isPassedDueDate()}">
         <div class="flex flex-col min-w-[40px] mr-2">
             <div v-if="task.status === 'pending'" class="text-yellow-500 text-2xl mr-2">
                 <i class="fa fa-exclamation-circle text-yellow-600 mr-2" aria-hidden="true"></i>
@@ -169,7 +169,7 @@ export default {
 
         isPassedDueDate() {
             const currentDate = new Date();
-            return new Date(this.dueDate) < currentDate;
+            return new Date(this.dueDate) < currentDate && this.task.status === "pending";
         },
 
         formatDate(dateString) {
